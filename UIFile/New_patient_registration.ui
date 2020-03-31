@@ -1,0 +1,849 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>800</width>
+    <height>668</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <widget class="QLabel" name="newPatientLabel">
+    <property name="geometry">
+     <rect>
+      <x>240</x>
+      <y>30</y>
+      <width>301</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:14pt; font-weight:600;&quot;&gt;New Patient Registration&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label">
+    <property name="geometry">
+     <rect>
+      <x>91</x>
+      <y>114</y>
+      <width>51</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;Name:&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="NP_name_first">
+    <property name="geometry">
+     <rect>
+      <x>146</x>
+      <y>120</y>
+      <width>161</width>
+      <height>22</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="NP_name_MI">
+    <property name="geometry">
+     <rect>
+      <x>310</x>
+      <y>120</y>
+      <width>20</width>
+      <height>22</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="NP_name_last">
+    <property name="geometry">
+     <rect>
+      <x>333</x>
+      <y>120</y>
+      <width>161</width>
+      <height>22</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_2">
+    <property name="geometry">
+     <rect>
+      <x>146</x>
+      <y>100</y>
+      <width>55</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>First</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_3">
+    <property name="geometry">
+     <rect>
+      <x>311</x>
+      <y>99</y>
+      <width>16</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>MI</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_4">
+    <property name="geometry">
+     <rect>
+      <x>336</x>
+      <y>99</y>
+      <width>55</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Last</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_5">
+    <property name="geometry">
+     <rect>
+      <x>501</x>
+      <y>114</y>
+      <width>51</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;DOB:&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="NP_DOB">
+    <property name="geometry">
+     <rect>
+      <x>547</x>
+      <y>119</y>
+      <width>161</width>
+      <height>22</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_6">
+    <property name="geometry">
+     <rect>
+      <x>91</x>
+      <y>150</y>
+      <width>51</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;Sex:&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+    </property>
+   </widget>
+   <widget class="QRadioButton" name="NP_sex_M">
+    <property name="geometry">
+     <rect>
+      <x>139</x>
+      <y>155</y>
+      <width>51</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>M</string>
+    </property>
+   </widget>
+   <widget class="QRadioButton" name="NP_sex_F">
+    <property name="geometry">
+     <rect>
+      <x>192</x>
+      <y>156</y>
+      <width>51</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>F</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="NP_address">
+    <property name="geometry">
+     <rect>
+      <x>337</x>
+      <y>156</y>
+      <width>371</width>
+      <height>22</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_7">
+    <property name="geometry">
+     <rect>
+      <x>264</x>
+      <y>150</y>
+      <width>71</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;Address:&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_8">
+    <property name="geometry">
+     <rect>
+      <x>89</x>
+      <y>184</y>
+      <width>81</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;City/State:&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="NP_city">
+    <property name="geometry">
+     <rect>
+      <x>180</x>
+      <y>190</y>
+      <width>161</width>
+      <height>22</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QComboBox" name="NP_state">
+    <property name="geometry">
+     <rect>
+      <x>350</x>
+      <y>190</y>
+      <width>51</width>
+      <height>22</height>
+     </rect>
+    </property>
+    <item>
+     <property name="text">
+      <string>--</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>AL</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>AK</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>AZ</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>AR</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>CA</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>CO</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>CT</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>DE</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>FL</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>GA</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>HI</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>ID</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>IL</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>IN</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>IA</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>KS</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>KY</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>LA</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>ME</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>MD</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>MA</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>MI</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>MN</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>MS</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>MO</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>MT</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>NE</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>NV</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>NH</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>NJ</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>NM</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>NY</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>NC</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>ND</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>OH</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>OK</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>OR</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>PA</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>RI</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>SC</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>SD</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>TN</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>TX</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>UT</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>VT</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>VA</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>WA</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>WV</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>WI</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>WY</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>GU</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>PR</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>VI</string>
+     </property>
+    </item>
+   </widget>
+   <widget class="QLineEdit" name="NP_zip">
+    <property name="geometry">
+     <rect>
+      <x>547</x>
+      <y>190</y>
+      <width>161</width>
+      <height>22</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_9">
+    <property name="geometry">
+     <rect>
+      <x>503</x>
+      <y>185</y>
+      <width>51</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;ZIP:&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="NP_prim_phone">
+    <property name="geometry">
+     <rect>
+      <x>210</x>
+      <y>225</y>
+      <width>161</width>
+      <height>22</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_10">
+    <property name="geometry">
+     <rect>
+      <x>90</x>
+      <y>220</y>
+      <width>121</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;Primary Phone:&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="NP_sec_phone">
+    <property name="geometry">
+     <rect>
+      <x>547</x>
+      <y>225</y>
+      <width>161</width>
+      <height>22</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_11">
+    <property name="geometry">
+     <rect>
+      <x>409</x>
+      <y>220</y>
+      <width>141</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;Secondary Phone:&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_12">
+    <property name="geometry">
+     <rect>
+      <x>336</x>
+      <y>343</y>
+      <width>55</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Last</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_13">
+    <property name="geometry">
+     <rect>
+      <x>311</x>
+      <y>343</y>
+      <width>16</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>MI</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="em_name_MI">
+    <property name="geometry">
+     <rect>
+      <x>310</x>
+      <y>364</y>
+      <width>20</width>
+      <height>22</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="em_name_last">
+    <property name="geometry">
+     <rect>
+      <x>333</x>
+      <y>364</y>
+      <width>161</width>
+      <height>22</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_15">
+    <property name="geometry">
+     <rect>
+      <x>427</x>
+      <y>388</y>
+      <width>121</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;Primary Phone:&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+    </property>
+   </widget>
+   <widget class="QRadioButton" name="em_sex_M">
+    <property name="geometry">
+     <rect>
+      <x>558</x>
+      <y>364</y>
+      <width>51</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>M</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_17">
+    <property name="geometry">
+     <rect>
+      <x>146</x>
+      <y>344</y>
+      <width>55</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>First</string>
+    </property>
+   </widget>
+   <widget class="QRadioButton" name="em_sex_F">
+    <property name="geometry">
+     <rect>
+      <x>611</x>
+      <y>365</y>
+      <width>51</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>F</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="em_name_first">
+    <property name="geometry">
+     <rect>
+      <x>146</x>
+      <y>364</y>
+      <width>161</width>
+      <height>22</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_19">
+    <property name="geometry">
+     <rect>
+      <x>91</x>
+      <y>358</y>
+      <width>51</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;Name:&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="newPatientLabel_2">
+    <property name="geometry">
+     <rect>
+      <x>240</x>
+      <y>274</y>
+      <width>301</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:14pt; font-weight:600;&quot;&gt;Emergency Contact&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="em_prim_phone">
+    <property name="geometry">
+     <rect>
+      <x>547</x>
+      <y>393</y>
+      <width>161</width>
+      <height>22</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_21">
+    <property name="geometry">
+     <rect>
+      <x>510</x>
+      <y>359</y>
+      <width>51</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;Sex:&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_14">
+    <property name="geometry">
+     <rect>
+      <x>91</x>
+      <y>387</y>
+      <width>181</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;Relationship to Patient:&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="em_relationship">
+    <property name="geometry">
+     <rect>
+      <x>274</x>
+      <y>393</y>
+      <width>151</width>
+      <height>22</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QLabel" name="newPatientLabel_3">
+    <property name="geometry">
+     <rect>
+      <x>229</x>
+      <y>445</y>
+      <width>301</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:14pt; font-weight:600;&quot;&gt;Insurance Info&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_16">
+    <property name="geometry">
+     <rect>
+      <x>90</x>
+      <y>509</y>
+      <width>71</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;Provider:&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="NP_insurance">
+    <property name="geometry">
+     <rect>
+      <x>163</x>
+      <y>515</y>
+      <width>211</width>
+      <height>22</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="NP_memberID">
+    <property name="geometry">
+     <rect>
+      <x>546</x>
+      <y>515</y>
+      <width>161</width>
+      <height>22</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_23">
+    <property name="geometry">
+     <rect>
+      <x>450</x>
+      <y>510</y>
+      <width>91</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;Member ID:&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="NP_create">
+    <property name="geometry">
+     <rect>
+      <x>90</x>
+      <y>549</y>
+      <width>93</width>
+      <height>28</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Create Profile</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="NP_cancel">
+    <property name="geometry">
+     <rect>
+      <x>615</x>
+      <y>549</y>
+      <width>93</width>
+      <height>28</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Cancel</string>
+    </property>
+   </widget>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>800</width>
+     <height>26</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
