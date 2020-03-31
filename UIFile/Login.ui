@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Dialog</class>
+ <widget class="QDialog" name="Dialog">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>759</width>
+    <height>518</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Dialog</string>
+  </property>
+  <widget class="QPushButton" name="loginButton">
+   <property name="geometry">
+    <rect>
+     <x>240</x>
+     <y>340</y>
+     <width>93</width>
+     <height>28</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Login</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="registerButton">
+   <property name="geometry">
+    <rect>
+     <x>420</x>
+     <y>340</y>
+     <width>93</width>
+     <height>28</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Register</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="MD_title">
+   <property name="geometry">
+    <rect>
+     <x>260</x>
+     <y>80</y>
+     <width>221</width>
+     <height>71</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Sitka Subheading</family>
+     <pointsize>20</pointsize>
+    </font>
+   </property>
+   <property name="text">
+    <string>Medical Doctor</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="MD_title2">
+   <property name="geometry">
+    <rect>
+     <x>140</x>
+     <y>150</y>
+     <width>481</width>
+     <height>71</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Sitka Subheading</family>
+     <pointsize>20</pointsize>
+    </font>
+   </property>
+   <property name="text">
+    <string>Hospital Management Software</string>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="loginFormPassIn">
+   <property name="geometry">
+    <rect>
+     <x>334</x>
+     <y>300</y>
+     <width>182</width>
+     <height>22</height>
+    </rect>
+   </property>
+   <property name="echoMode">
+    <enum>QLineEdit::Password</enum>
+   </property>
+  </widget>
+  <widget class="QLabel" name="loginFormPassLabel">
+   <property name="geometry">
+    <rect>
+     <x>241</x>
+     <y>300</y>
+     <width>83</width>
+     <height>22</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt; font-weight:600;&quot;&gt;Password&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="loginFormUserIn">
+   <property name="geometry">
+    <rect>
+     <x>334</x>
+     <y>271</y>
+     <width>182</width>
+     <height>22</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+  </widget>
+  <widget class="QLabel" name="loginFormUserLabel">
+   <property name="geometry">
+    <rect>
+     <x>241</x>
+     <y>271</y>
+     <width>86</width>
+     <height>22</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt; font-weight:600;&quot;&gt;Username&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+   </property>
+  </widget>
+  <zorder>loginButton</zorder>
+  <zorder>MD_title</zorder>
+  <zorder>MD_title2</zorder>
+  <zorder>registerButton</zorder>
+  <zorder>loginFormPassIn</zorder>
+  <zorder>loginFormPassLabel</zorder>
+  <zorder>loginFormUserIn</zorder>
+  <zorder>loginFormUserLabel</zorder>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
