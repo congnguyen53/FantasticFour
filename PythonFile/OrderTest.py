@@ -10,6 +10,7 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PP import *
 
+
 class Ui_MainWindow1(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
