@@ -1,0 +1,238 @@
+# -*- coding: utf-8 -*-
+
+# Form implementation generated from reading ui file 'adminhub.ui'
+#
+# Created by: PyQt5 UI code generator 5.13.0
+#
+# WARNING! All changes made in this file will be lost!
+
+
+from PyQt5 import QtCore, QtGui, QtWidgets
+
+
+class Ui_MainWindow(object):
+    def setupUi(self, MainWindow):
+        MainWindow.setObjectName("MainWindow")
+        MainWindow.resize(1100, 794)
+        self.centralwidget = QtWidgets.QWidget(MainWindow)
+        self.centralwidget.setObjectName("centralwidget")
+        self.adminhubtab = QtWidgets.QTabWidget(self.centralwidget)
+        self.adminhubtab.setGeometry(QtCore.QRect(30, 50, 1100, 800))
+        self.adminhubtab.setMinimumSize(QtCore.QSize(1100, 800))
+        self.adminhubtab.setMaximumSize(QtCore.QSize(1100, 800))
+        font = QtGui.QFont()
+        font.setPointSize(14)
+        self.adminhubtab.setFont(font)
+        self.adminhubtab.setObjectName("adminhubtab")
+        self.register = QtWidgets.QWidget()
+        self.register.setObjectName("register")
+        self.in_name = QtWidgets.QTextEdit(self.register)
+        self.in_name.setGeometry(QtCore.QRect(470, 90, 211, 31))
+        self.in_name.setObjectName("in_name")
+        self.in_dob = QtWidgets.QDateEdit(self.register)
+        self.in_dob.setGeometry(QtCore.QRect(470, 220, 110, 22))
+        font = QtGui.QFont()
+        font.setPointSize(12)
+        self.in_dob.setFont(font)
+        self.in_dob.setObjectName("in_dob")
+        self.in_datejoined = QtWidgets.QDateEdit(self.register)
+        self.in_datejoined.setGeometry(QtCore.QRect(470, 190, 110, 22))
+        font = QtGui.QFont()
+        font.setPointSize(12)
+        self.in_datejoined.setFont(font)
+        self.in_datejoined.setObjectName("in_datejoined")
+        self.in_department = QtWidgets.QComboBox(self.register)
+        self.in_department.setGeometry(QtCore.QRect(470, 160, 73, 22))
+        self.in_department.setObjectName("in_department")
+        self.in_fieldofstudy = QtWidgets.QComboBox(self.register)
+        self.in_fieldofstudy.setGeometry(QtCore.QRect(470, 130, 73, 22))
+        self.in_fieldofstudy.setObjectName("in_fieldofstudy")
+        self.in_usertype = QtWidgets.QComboBox(self.register)
+        self.in_usertype.setGeometry(QtCore.QRect(470, 330, 81, 22))
+        self.in_usertype.setObjectName("in_usertype")
+        self.in_usertype.addItem("")
+        self.in_usertype.addItem("")
+        self.in_usertype.addItem("")
+        self.in_username = QtWidgets.QTextEdit(self.register)
+        self.in_username.setGeometry(QtCore.QRect(470, 250, 181, 31))
+        self.in_username.setObjectName("in_username")
+        self.in_password = QtWidgets.QTextEdit(self.register)
+        self.in_password.setGeometry(QtCore.QRect(470, 290, 181, 31))
+        self.in_password.setObjectName("in_password")
+        self.button_registerWorker = QtWidgets.QToolButton(self.register)
+        self.button_registerWorker.setGeometry(QtCore.QRect(560, 370, 93, 28))
+        self.button_registerWorker.setObjectName("button_registerWorker")
+        self.label = QtWidgets.QLabel(self.register)
+        self.label.setGeometry(QtCore.QRect(370, 90, 55, 16))
+        font = QtGui.QFont()
+        font.setPointSize(12)
+        self.label.setFont(font)
+        self.label.setObjectName("label")
+        self.label_2 = QtWidgets.QLabel(self.register)
+        self.label_2.setGeometry(QtCore.QRect(370, 130, 161, 21))
+        font = QtGui.QFont()
+        font.setPointSize(12)
+        self.label_2.setFont(font)
+        self.label_2.setObjectName("label_2")
+        self.label_5 = QtWidgets.QLabel(self.register)
+        self.label_5.setGeometry(QtCore.QRect(370, 160, 161, 21))
+        font = QtGui.QFont()
+        font.setPointSize(12)
+        self.label_5.setFont(font)
+        self.label_5.setObjectName("label_5")
+        self.label_6 = QtWidgets.QLabel(self.register)
+        self.label_6.setGeometry(QtCore.QRect(370, 190, 161, 21))
+        font = QtGui.QFont()
+        font.setPointSize(12)
+        self.label_6.setFont(font)
+        self.label_6.setObjectName("label_6")
+        self.label_7 = QtWidgets.QLabel(self.register)
+        self.label_7.setGeometry(QtCore.QRect(370, 220, 161, 21))
+        font = QtGui.QFont()
+        font.setPointSize(12)
+        self.label_7.setFont(font)
+        self.label_7.setObjectName("label_7")
+        self.label_8 = QtWidgets.QLabel(self.register)
+        self.label_8.setGeometry(QtCore.QRect(370, 250, 161, 21))
+        font = QtGui.QFont()
+        font.setPointSize(12)
+        self.label_8.setFont(font)
+        self.label_8.setObjectName("label_8")
+        self.label_9 = QtWidgets.QLabel(self.register)
+        self.label_9.setGeometry(QtCore.QRect(370, 290, 161, 21))
+        font = QtGui.QFont()
+        font.setPointSize(12)
+        self.label_9.setFont(font)
+        self.label_9.setObjectName("label_9")
+        self.label_10 = QtWidgets.QLabel(self.register)
+        self.label_10.setGeometry(QtCore.QRect(370, 330, 161, 21))
+        font = QtGui.QFont()
+        font.setPointSize(12)
+        self.label_10.setFont(font)
+        self.label_10.setObjectName("label_10")
+        self.adminhubtab.addTab(self.register, "")
+        self.adjust = QtWidgets.QWidget()
+        self.adjust.setObjectName("adjust")
+        self.scrollArea_3 = QtWidgets.QScrollArea(self.adjust)
+        self.scrollArea_3.setGeometry(QtCore.QRect(160, 140, 721, 441))
+        self.scrollArea_3.setWidgetResizable(True)
+        self.scrollArea_3.setObjectName("scrollArea_3")
+        self.scrollAreaWidgetContents_4 = QtWidgets.QWidget()
+        self.scrollAreaWidgetContents_4.setGeometry(QtCore.QRect(0, 0, 719, 439))
+        self.scrollAreaWidgetContents_4.setObjectName("scrollAreaWidgetContents_4")
+        self.textBrowser_39 = QtWidgets.QTextBrowser(self.scrollAreaWidgetContents_4)
+        self.textBrowser_39.setGeometry(QtCore.QRect(10, 10, 701, 101))
+        self.textBrowser_39.setObjectName("textBrowser_39")
+        self.toolButton_6 = QtWidgets.QToolButton(self.scrollAreaWidgetContents_4)
+        self.toolButton_6.setGeometry(QtCore.QRect(600, 40, 93, 28))
+        self.toolButton_6.setObjectName("toolButton_6")
+        self.scrollArea_3.setWidget(self.scrollAreaWidgetContents_4)
+        self.textBrowser_35 = QtWidgets.QTextBrowser(self.adjust)
+        self.textBrowser_35.setGeometry(QtCore.QRect(170, 30, 91, 71))
+        self.textBrowser_35.setObjectName("textBrowser_35")
+        self.in_searchByPatientID_3 = QtWidgets.QTextEdit(self.adjust)
+        self.in_searchByPatientID_3.setGeometry(QtCore.QRect(270, 30, 591, 71))
+        self.in_searchByPatientID_3.setObjectName("in_searchByPatientID_3")
+        self.input_searchdoctor = QtWidgets.QToolButton(self.adjust)
+        self.input_searchdoctor.setGeometry(QtCore.QRect(760, 100, 93, 28))
+        self.input_searchdoctor.setObjectName("input_searchdoctor")
+        self.adminhubtab.addTab(self.adjust, "")
+        self.historyLogs = QtWidgets.QWidget()
+        self.historyLogs.setObjectName("historyLogs")
+        self.in_searchByPatientID_4 = QtWidgets.QTextEdit(self.historyLogs)
+        self.in_searchByPatientID_4.setGeometry(QtCore.QRect(270, 30, 591, 71))
+        self.in_searchByPatientID_4.setObjectName("in_searchByPatientID_4")
+        self.input_searchpatient = QtWidgets.QToolButton(self.historyLogs)
+        self.input_searchpatient.setGeometry(QtCore.QRect(760, 100, 93, 28))
+        self.input_searchpatient.setObjectName("input_searchpatient")
+        self.textBrowser_36 = QtWidgets.QTextBrowser(self.historyLogs)
+        self.textBrowser_36.setGeometry(QtCore.QRect(170, 30, 91, 71))
+        self.textBrowser_36.setObjectName("textBrowser_36")
+        self.scrollArea_4 = QtWidgets.QScrollArea(self.historyLogs)
+        self.scrollArea_4.setGeometry(QtCore.QRect(160, 140, 721, 441))
+        self.scrollArea_4.setWidgetResizable(True)
+        self.scrollArea_4.setObjectName("scrollArea_4")
+        self.scrollAreaWidgetContents_5 = QtWidgets.QWidget()
+        self.scrollAreaWidgetContents_5.setGeometry(QtCore.QRect(0, 0, 719, 439))
+        self.scrollAreaWidgetContents_5.setObjectName("scrollAreaWidgetContents_5")
+        self.textBrowser_40 = QtWidgets.QTextBrowser(self.scrollAreaWidgetContents_5)
+        self.textBrowser_40.setGeometry(QtCore.QRect(10, 10, 701, 81))
+        self.textBrowser_40.setObjectName("textBrowser_40")
+        self.toolButton_8 = QtWidgets.QToolButton(self.scrollAreaWidgetContents_5)
+        self.toolButton_8.setGeometry(QtCore.QRect(600, 40, 93, 28))
+        self.toolButton_8.setObjectName("toolButton_8")
+        self.scrollArea_4.setWidget(self.scrollAreaWidgetContents_5)
+        self.adminhubtab.addTab(self.historyLogs, "")
+        MainWindow.setCentralWidget(self.centralwidget)
+        self.menubar = QtWidgets.QMenuBar(MainWindow)
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 1100, 26))
+        self.menubar.setObjectName("menubar")
+        MainWindow.setMenuBar(self.menubar)
+        self.statusbar = QtWidgets.QStatusBar(MainWindow)
+        self.statusbar.setObjectName("statusbar")
+        MainWindow.setStatusBar(self.statusbar)
+
+        self.retranslateUi(MainWindow)
+        self.adminhubtab.setCurrentIndex(0)
+        QtCore.QMetaObject.connectSlotsByName(MainWindow)
+
+    def retranslateUi(self, MainWindow):
+        _translate = QtCore.QCoreApplication.translate
+        MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
+        self.in_usertype.setItemText(0, _translate("MainWindow", "Admin"))
+        self.in_usertype.setItemText(1, _translate("MainWindow", "Doctor"))
+        self.in_usertype.setItemText(2, _translate("MainWindow", "Nurse"))
+        self.button_registerWorker.setText(_translate("MainWindow", "Enter"))
+        self.label.setText(_translate("MainWindow", "Name"))
+        self.label_2.setText(_translate("MainWindow", "Field of Study"))
+        self.label_5.setText(_translate("MainWindow", "Department"))
+        self.label_6.setText(_translate("MainWindow", "Date Joined"))
+        self.label_7.setText(_translate("MainWindow", "Date of Birth"))
+        self.label_8.setText(_translate("MainWindow", "Username"))
+        self.label_9.setText(_translate("MainWindow", "Password"))
+        self.label_10.setText(_translate("MainWindow", "User Type"))
+        self.adminhubtab.setTabText(self.adminhubtab.indexOf(self.register), _translate("MainWindow", "Register"))
+        self.textBrowser_39.setHtml(_translate("MainWindow", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"</style></head><body style=\" font-family:\'MS Shell Dlg 2\'; font-size:14pt; font-weight:400; font-style:normal;\">\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:9pt;\">Name: Rebecca Johnson</span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:9pt;\">Field of Study: Nutrition</span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:9pt;\">Department: Anesthesiology</span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:9pt;\">Date Joined: 03/03/09</span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:9pt;\">Date of Birth: 5/21/80</span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:9pt;\">User Type: Doctor</span></p></body></html>"))
+        self.toolButton_6.setText(_translate("MainWindow", "Access"))
+        self.textBrowser_35.setHtml(_translate("MainWindow", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"</style></head><body style=\" font-family:\'MS Shell Dlg 2\'; font-size:14pt; font-weight:400; font-style:normal;\">\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:12pt; font-weight:600;\">Search by Doctor Name</span></p></body></html>"))
+        self.input_searchdoctor.setText(_translate("MainWindow", "Search"))
+        self.adminhubtab.setTabText(self.adminhubtab.indexOf(self.adjust), _translate("MainWindow", "Adjust"))
+        self.input_searchpatient.setText(_translate("MainWindow", "Search"))
+        self.textBrowser_36.setHtml(_translate("MainWindow", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"</style></head><body style=\" font-family:\'MS Shell Dlg 2\'; font-size:14pt; font-weight:400; font-style:normal;\">\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:12pt; font-weight:600;\">Search by Patient ID</span></p></body></html>"))
+        self.textBrowser_40.setHtml(_translate("MainWindow", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"</style></head><body style=\" font-family:\'MS Shell Dlg 2\'; font-size:14pt; font-weight:400; font-style:normal;\">\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:9pt;\">Patient ID: Doe1</span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:9pt;\">Name: Jane Done</span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:9pt;\">DOB: 07-31-98</span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:9pt;\">Last Log Update: 1-21-20</span></p></body></html>"))
+        self.toolButton_8.setText(_translate("MainWindow", "Access"))
+        self.adminhubtab.setTabText(self.adminhubtab.indexOf(self.historyLogs), _translate("MainWindow", "History Logs"))
+
+
+if __name__ == "__main__":
+    import sys
+    app = QtWidgets.QApplication(sys.argv)
+    MainWindow = QtWidgets.QMainWindow()
+    ui = Ui_MainWindow()
+    ui.setupUi(MainWindow)
+    MainWindow.show()
+    sys.exit(app.exec_())
