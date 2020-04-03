@@ -1038,7 +1038,7 @@ p, li { white-space: pre-wrap; }
        <string>Priority:</string>
       </property>
      </widget>
-     <widget class="QToolButton" name="toolButton_4">
+     <widget class="QToolButton" name="button_ordertest4">
       <property name="geometry">
        <rect>
         <x>420</x>
@@ -1115,7 +1115,7 @@ p, li { white-space: pre-wrap; }
      </widget>
     </widget>
    </widget>
-   <widget class="QTextBrowser" name="textBrowser">
+   <widget class="QTextBrowser" name="labtestheadline">
     <property name="geometry">
      <rect>
       <x>20</x>
@@ -1132,7 +1132,7 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'Times New Roman'; font-size:26pt; font-weight:600; color:#111111; background-color:#f4f4f4;&quot;&gt;Laboratory Test&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
     </property>
    </widget>
-   <widget class="QToolButton" name="toolButton">
+   <widget class="QToolButton" name="button_mainmenu">
     <property name="geometry">
      <rect>
       <x>460</x>
@@ -1150,7 +1150,7 @@ p, li { white-space: pre-wrap; }
      <string>Main Menu</string>
     </property>
    </widget>
-   <widget class="QToolButton" name="toolButton_2">
+   <widget class="QToolButton" name="button_patientprofile">
     <property name="geometry">
      <rect>
       <x>590</x>
@@ -1168,7 +1168,7 @@ p, li { white-space: pre-wrap; }
      <string>Patient Profile</string>
     </property>
    </widget>
-   <widget class="QToolButton" name="toolButton_3">
+   <widget class="QToolButton" name="button_teststatus">
     <property name="geometry">
      <rect>
       <x>720</x>
