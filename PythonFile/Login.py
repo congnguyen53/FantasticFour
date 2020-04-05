@@ -6,55 +6,74 @@
 #
 # WARNING! All changes made in this file will be lost!
 
-
 from PyQt5 import QtCore, QtGui, QtWidgets
-
+from Main_screen import Ui_MainScreen
 
 class Ui_Dialog(object):
+    # Function for opening a new screen
+    def openWindow(self):
+        self.window = QtWidgets.QMainWindow()
+        self.ui = Ui_MainScreen()  # Use class name of GUI you want to open
+        self.ui.setupUi(self.window)
+        self.window.show()
+
     def setupUi(self, Dialog):
         Dialog.setObjectName("Dialog")
-        Dialog.resize(759, 518)
+        Dialog.resize(1100, 800)
+        Dialog.setMinimumSize(QtCore.QSize(1100, 800))
+        Dialog.setMaximumSize(QtCore.QSize(1100, 800))
         self.loginButton = QtWidgets.QPushButton(Dialog)
-        self.loginButton.setGeometry(QtCore.QRect(240, 340, 93, 28))
+        self.loginButton.setGeometry(QtCore.QRect(369, 400, 151, 41))
         self.loginButton.setObjectName("loginButton")
-        self.registerButton = QtWidgets.QPushButton(Dialog)
-        self.registerButton.setGeometry(QtCore.QRect(420, 340, 93, 28))
-        self.registerButton.setObjectName("registerButton")
+
+        #Login button click event to open main menu
+        self.loginButton.clicked.connect(self.openWindow)
+
+        self.exitButton = QtWidgets.QPushButton(Dialog)
+        self.exitButton.setGeometry(QtCore.QRect(570, 400, 151, 41))
+        self.exitButton.setObjectName("exitButton")
+
+        #Click event for exit button to close system
+        self.exitButton.clicked.connect(sys.exit)
+
         self.MD_title = QtWidgets.QLabel(Dialog)
-        self.MD_title.setGeometry(QtCore.QRect(260, 80, 221, 71))
+        self.MD_title.setGeometry(QtCore.QRect(440, 100, 221, 71))
         font = QtGui.QFont()
         font.setFamily("Sitka Subheading")
         font.setPointSize(20)
         self.MD_title.setFont(font)
         self.MD_title.setObjectName("MD_title")
         self.MD_title2 = QtWidgets.QLabel(Dialog)
-        self.MD_title2.setGeometry(QtCore.QRect(140, 150, 481, 71))
+        self.MD_title2.setGeometry(QtCore.QRect(320, 170, 481, 71))
         font = QtGui.QFont()
         font.setFamily("Sitka Subheading")
         font.setPointSize(20)
         self.MD_title2.setFont(font)
         self.MD_title2.setObjectName("MD_title2")
-        self.loginFormPassIn = QtWidgets.QLineEdit(Dialog)
-        self.loginFormPassIn.setGeometry(QtCore.QRect(334, 300, 182, 22))
-        self.loginFormPassIn.setObjectName("loginFormPassIn")
-        self.loginFormPassLabel = QtWidgets.QLabel(Dialog)
-        self.loginFormPassLabel.setGeometry(QtCore.QRect(241, 300, 83, 22))
-        self.loginFormPassLabel.setObjectName("loginFormPassLabel")
-        self.loginFormUserIn = QtWidgets.QLineEdit(Dialog)
-        self.loginFormUserIn.setGeometry(QtCore.QRect(334, 271, 182, 22))
-        self.loginFormUserIn.setText("")
-        self.loginFormUserIn.setObjectName("loginFormUserIn")
-        self.loginFormUserLabel = QtWidgets.QLabel(Dialog)
-        self.loginFormUserLabel.setGeometry(QtCore.QRect(241, 271, 86, 22))
-        self.loginFormUserLabel.setObjectName("loginFormUserLabel")
+        self.formLayoutWidget = QtWidgets.QWidget(Dialog)
+        self.formLayoutWidget.setGeometry(QtCore.QRect(370, 320, 351, 65))
+        self.formLayoutWidget.setObjectName("formLayoutWidget")
+        self.formLayout = QtWidgets.QFormLayout(self.formLayoutWidget)
+        self.formLayout.setContentsMargins(0, 0, 0, 0)
+        self.formLayout.setObjectName("formLayout")
+        self.usernameLabel = QtWidgets.QLabel(self.formLayoutWidget)
+        self.usernameLabel.setObjectName("usernameLabel")
+        self.formLayout.setWidget(0, QtWidgets.QFormLayout.LabelRole, self.usernameLabel)
+        self.login_Username = QtWidgets.QLineEdit(self.formLayoutWidget)
+        self.login_Username.setObjectName("login_Username")
+        self.formLayout.setWidget(0, QtWidgets.QFormLayout.FieldRole, self.login_Username)
+        self.passwordLabel = QtWidgets.QLabel(self.formLayoutWidget)
+        self.passwordLabel.setObjectName("passwordLabel")
+        self.formLayout.setWidget(1, QtWidgets.QFormLayout.LabelRole, self.passwordLabel)
+        self.login_Password = QtWidgets.QLineEdit(self.formLayoutWidget)
+        self.login_Password.setObjectName("login_Password")
+        self.login_Password.setEchoMode(QtWidgets.QLineEdit.Password)
+        self.formLayout.setWidget(1, QtWidgets.QFormLayout.FieldRole, self.login_Password)
         self.loginButton.raise_()
         self.MD_title.raise_()
         self.MD_title2.raise_()
-        self.registerButton.raise_()
-        self.loginFormPassIn.raise_()
-        self.loginFormPassLabel.raise_()
-        self.loginFormUserIn.raise_()
-        self.loginFormUserLabel.raise_()
+        self.exitButton.raise_()
+        self.formLayoutWidget.raise_()
 
         self.retranslateUi(Dialog)
         QtCore.QMetaObject.connectSlotsByName(Dialog)
@@ -63,11 +82,11 @@ class Ui_Dialog(object):
         _translate = QtCore.QCoreApplication.translate
         Dialog.setWindowTitle(_translate("Dialog", "Dialog"))
         self.loginButton.setText(_translate("Dialog", "Login"))
-        self.registerButton.setText(_translate("Dialog", "Register"))
+        self.exitButton.setText(_translate("Dialog", "Exit"))
         self.MD_title.setText(_translate("Dialog", "Medical Doctor"))
         self.MD_title2.setText(_translate("Dialog", "Hospital Management Software"))
-        self.loginFormPassLabel.setText(_translate("Dialog", "<html><head/><body><p><span style=\" font-size:10pt; font-weight:600;\">Password</span></p></body></html>"))
-        self.loginFormUserLabel.setText(_translate("Dialog", "<html><head/><body><p><span style=\" font-size:10pt; font-weight:600;\">Username</span></p></body></html>"))
+        self.usernameLabel.setText(_translate("Dialog", "<html><head/><body><p><span style=\" font-size:14pt;\">Username:</span></p></body></html>"))
+        self.passwordLabel.setText(_translate("Dialog", "<html><head/><body><p><span style=\" font-size:14pt;\">Password: </span></p></body></html>"))
 
 
 if __name__ == "__main__":
