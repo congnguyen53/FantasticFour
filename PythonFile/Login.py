@@ -6,16 +6,13 @@
 #
 # WARNING! All changes made in this file will be lost!
 
+from PyQt5.QtWidgets import QApplication, QWidget
 from PyQt5 import QtCore, QtGui, QtWidgets
-from Main_screen import Ui_MainScreen
+from Main_screen import *
 
 class Ui_Dialog(object):
-    # Function for opening a new screen
-    def openWindow(self):
-        self.window = QtWidgets.QMainWindow()
-        self.ui = Ui_MainScreen()  # Use class name of GUI you want to open
-        self.ui.setupUi(self.window)
-        self.window.show()
+    def exit(self):
+        sys.exit()
 
     def setupUi(self, Dialog):
         Dialog.setObjectName("Dialog")
@@ -25,16 +22,12 @@ class Ui_Dialog(object):
         self.loginButton = QtWidgets.QPushButton(Dialog)
         self.loginButton.setGeometry(QtCore.QRect(369, 400, 151, 41))
         self.loginButton.setObjectName("loginButton")
-
-        #Login button click event to open main menu
-        self.loginButton.clicked.connect(self.openWindow)
-
         self.exitButton = QtWidgets.QPushButton(Dialog)
         self.exitButton.setGeometry(QtCore.QRect(570, 400, 151, 41))
         self.exitButton.setObjectName("exitButton")
 
         #Click event for exit button to close system
-        self.exitButton.clicked.connect(sys.exit)
+        self.exitButton.clicked.connect(self.exit)
 
         self.MD_title = QtWidgets.QLabel(Dialog)
         self.MD_title.setGeometry(QtCore.QRect(440, 100, 221, 71))
@@ -92,6 +85,7 @@ class Ui_Dialog(object):
 if __name__ == "__main__":
     import sys
     app = QtWidgets.QApplication(sys.argv)
+    app.setQuitOnLastWindowClosed(False)
     Dialog = QtWidgets.QDialog()
     ui = Ui_Dialog()
     ui.setupUi(Dialog)
