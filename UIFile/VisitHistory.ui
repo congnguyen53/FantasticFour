@@ -78,6 +78,11 @@ p, li { white-space: pre-wrap; }
     </property>
     <item>
      <property name="text">
+      <string>New Visit</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
       <string>07/22/19</string>
      </property>
     </item>
@@ -139,6 +144,48 @@ p, li { white-space: pre-wrap; }
     </property>
     <property name="text">
      <string>MM/DD/YYYY</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="patientID">
+    <property name="geometry">
+     <rect>
+      <x>50</x>
+      <y>220</y>
+      <width>81</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>MS Shell Dlg 2</family>
+      <pointsize>12</pointsize>
+      <weight>50</weight>
+      <bold>false</bold>
+     </font>
+    </property>
+    <property name="text">
+     <string>Patient ID:</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="in_patientID_visithistory">
+    <property name="geometry">
+     <rect>
+      <x>130</x>
+      <y>220</y>
+      <width>81</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>MS Shell Dlg 2</family>
+      <pointsize>12</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="text">
+     <string>jdoe102</string>
     </property>
    </widget>
   </widget>
