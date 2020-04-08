@@ -148,10 +148,10 @@ class PatientSearch(QtWidgets.QMainWindow, Ui_PatientSearch):
         self.controlsLayout = QtWidgets.QVBoxLayout()
 
         # Patient info for testing -- update so each list pulls values from SQL DB
-        PATIENT_NAMES = ["Jenna Johnson", "Donald Trump", "Kobe Bryant", "Adolf", "Jenna Johnson", "Donald Trump", "Kobe Bryant", "Adolf"]
-        PATIENT_DOB = ["01/21/1972", "06/14/1943", "12/12/1912", "69/69/0420", "01/21/1972", "06/14/1943", "12/12/1912", "69/69/0420"]
-        PATIENT_IDs = ["jjohnson001", "dtrump420", "kbryantRIP", "a666", "jjohnson001", "dtrump420", "kbryantRIP", "a666"]
-        PATIENT_LAST_VISIT = ["01/12/2222", "01/12/2222", "01/12/2222", "01/12/2222", "01/12/2222", "01/12/2222", "01/12/2222", "01/12/2222"]
+        PATIENT_NAMES = ["Jenna Johnson", "Donald Trump", "Kobe Bryant", "Jenna Johnson", "Donald Trump", "Kobe Bryant"]
+        PATIENT_DOB = ["01/21/1972", "06/14/1943", "12/12/1912", "01/21/1972", "06/14/1943", "12/12/1912",]
+        PATIENT_IDs = ["jjohnson001", "dtrump420", "kbryantRIP", "jjohnson001", "dtrump420", "kbryantRIP"]
+        PATIENT_LAST_VISIT = ["01/12/2222", "01/12/2222", "01/12/2222", "01/12/2222", "01/12/2222", "01/12/2222"]
 
         # List of each searchable patient widget -- these are not the actual patient objects
         self.patients = []
