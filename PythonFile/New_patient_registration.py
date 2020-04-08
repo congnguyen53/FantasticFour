@@ -10,8 +10,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import QApplication, QWidget
 from Main_screen import *
 
-class Ui_NP_Registration(object):
-
+class Ui_NP_Registration(QWidget):
     def setupUi(self, NPRegistration):
         NPRegistration.setObjectName("NPRegistration")
         NPRegistration.resize(1100, 800)
