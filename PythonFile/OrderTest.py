@@ -8,8 +8,7 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
-from PySide2.QtWidgets import QApplication, QPushButton
-from Login import *
+
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
