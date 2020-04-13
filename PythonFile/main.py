@@ -1,6 +1,6 @@
 from PyQt5.QtWidgets import QMessageBox, QWidget, QLabel, QPushButton, QHBoxLayout, QSpacerItem, QSizePolicy, QScrollArea
 from PyQt5 import QtCore, QtGui, QtWidgets
-from PyQt5.QtCore import Qt
+from PyQt5.QtCore import *
 import datetime
 from Login import *
 from Main_screen import *
@@ -121,8 +121,8 @@ class MainScreen(QtWidgets.QMainWindow, Ui_MainScreen):
         super(MainScreen, self).__init__()
         self.setupUi(self)
 
-        self.fname = fname.upper()
-        self.lname = lname.upper()
+        self.fname = fname
+        self.lname = lname
         self.user = user
 
         self.nameLabel.setText(
@@ -257,7 +257,7 @@ class Appointments(QtWidgets.QMainWindow, Ui_Appointments):
 class PatientWidget(QtWidgets.QWidget):
     # Function for each access button -- Add system that searches self.PID in DB and opens patient profile with that information
     def access(self):
-        self.Profile = PatientProfile(self.PID)
+        self.Profile = PatientProfile(self.PID, self.user)
         self.Profile.show()
 
         # Log
@@ -390,36 +390,113 @@ class PatientProfile(QtWidgets.QMainWindow, Ui_PatientProfile):
             event.accept()
         else:
             event.ignore()
+
     def dateVisit(self):
-        self.VisitHistory = VisitHistory(self.PID)
+        self.VisitHistory = VisitHistory(self.PID, self.user)
         self.VisitHistory.show()
         self.hide()
+
     def OrderTest(self):
         self.Order = OrderTest(self.PID)
         self.Order.show()
+
     def TestStatus(self):
-        self.Status = TestStatus(self.PID,self.dateVisit)
+        self.Status = TestStatus(self.PID, self.dateVisit)
         self.Status.show()
 
     def exit(self):
         self.close()
 
-    def __init__(self, PID):
+    def confirmMessage(self):
+        message = QMessageBox()
+        message.setWindowTitle("Patient Updated!")
+        message.setText("Patient successfully updated!")
+        message.addButton(QMessageBox.Ok)
+        message.exec()
+
+        # Log
+        self.date = datetime.datetime.now()
+        logging.info("***USER " + self.user + " has updated patient " + self.PID.upper() + " @ " + str(self.date))
+
+    def insertQuery(self, lname, fname, DOB, age, weight, height, sex, address, city, state, country, zip, primphone, secphone, insurance,
+                    memID, eName, ePhone, eRel, id):
+        import datetime
+        self.date = datetime.datetime.now()
+        self.date = self.date.strftime("%Y-%m-%d")
+        DOB = DOB.strftime("%Y-%m-%d")
+
+        # DB connection
+        self.db = pymysql.connect(host="localhost", user="root", passwd=sqlpassword, db="hospitaldb")
+        self.c = self.db.cursor()
+        self.info = (lname, fname, DOB, age, weight, height, sex, address, city, state, country, zip, primphone, id)
+        self.c.execute("UPDATE patientprofile SET lastname = %s, firstname = %s, DOB = %s, Age = %s, Weight = %s,"
+                       "Height = %s, Sex = %s, streetaddress = %s, City = %s, State = %s, Country = %s, Zip = %s, "
+                       "primaryPhone = %s WHERE patientID = %s", self.info)
+        self.db.commit()
+
+        #MySQL would not execut as a single function so it had to be split in 2
+        self.info2 = (secphone, insurance, memID, eName, ePhone, eRel, id)
+        self.c.execute("UPDATE patientprofile SET secondaryPhone = %s, Insurance = %s, MemberID = %s, eContactName = %s, "
+                       "ePrimaryPhone = %s, eRelation = %s WHERE patientID = %s", self.info2)
+        self.db.commit()
+
+    def saveInfo(self):
+        # DB connection
+        self.db = pymysql.connect(host="localhost", user="root", passwd=sqlpassword, db="hospitaldb")
+        self.c = self.db.cursor()
+        try:
+            # Get all info from input boxes
+            self.DOB = self.in_dob.text()
+            self.DOB = datetime.datetime.strptime(self.DOB, "%Y-%m-%d")
+            self.age = int(self.in_age.text())
+            self.weight = int(self.in_weight.text())
+            self.height = self.in_height.text()
+            self.sex = self.in_sex.text()
+            self.address = self.in_street.text()
+            self.city = self.in_city.text()
+            self.state = self.in_state.text()
+            self.country = self.in_country.text()
+            self.zip = int(self.in_zip.text())
+            self.primPhone = self.in_primcontact.text()
+            self.secPhone = self.in_seccontact.text()
+            self.insurance = self.in_insurance.text()
+            self.memberID = self.in_memid.text()
+            self.eContactName = self.in_emername.text()
+            self.ePhone = self.in_emerprimcontact.text()
+            self.eRelation = self.in_emergencyrelation.text()
+
+            # Insert data into database
+            self.insertQuery(self.lname, self.fname, self.DOB, self.age, self.weight, self.height, self.sex, self.address, self.city,
+                             self.state, self.country, self.zip, self.primPhone, self.secPhone, self.insurance, self.memberID,
+                             self.eContactName, self.ePhone, self.eRelation, self.PID)
+            # display confirmation and return to main screen
+            self.confirmMessage()
+
+        # catch error and display message
+        except:
+            invalidInput = QMessageBox()
+            invalidInput.setWindowTitle("Invalid Input")
+            invalidInput.setText(
+                "One or more fields were entered incorrectly. Please look over the form and ensure all values are correct.\n\n"
+                "Fields with required formats:\n\t\t-DOB as \'YYYY-MM-DD\'\n\t\t-ZIP as a 6-digit whole number\n\t\t-Phone numbers as (888)888-8888")
+            invalidInput.addButton(QMessageBox.Ok)
+            invalidInput.exec()
+
+    def __init__(self, PID, user):
         super(PatientProfile, self).__init__()
         self.setupUi(self)
-
         self.PID = PID
+        self.user = user
 
         # DB Connection
         self.db = pymysql.connect(host="localhost", user="root", passwd=sqlpassword, db="hospitaldb")
         self.c = self.db.cursor()
-        self.c.execute("SELECT firstName, lastName, DOB, Age, Weight,Height,Sex, streetaddress, City, State, Country, Zip, primaryPhone, secondaryPhone, Insurance, MemberID, eContactName, eRelation, ePrimaryPhone, dateVisited FROM patientprofile WHERE patientID=%s", self.PID)
-
-
-        for first, last, dob, age,weight,height,sex, street,city, state,country,zip,primphone,secphone,insur,memberid, econtactname, erela,eprimphone,datevisited in self.c.fetchall():
+        self.c.execute("SELECT firstName, lastName, DOB, Age, Weight, Height, Sex, streetaddress, City, State, Country, Zip, primaryPhone, secondaryPhone, Insurance, MemberID, eContactName, eRelation, ePrimaryPhone, dateVisited FROM patientprofile WHERE patientID=%s", self.PID)
+        for first, last, dob, age, weight, height, sex, street, city, state, country, zip, primphone, secphone, insur, memberid, econtactname, erela, eprimphone, datevisited in self.c.fetchall():
             self.fname = first
             self.lname = last
             self.DOB = dob
+
             self.Age = age
             self.Weight = weight
             self.Height = height
@@ -438,11 +515,13 @@ class PatientProfile(QtWidgets.QMainWindow, Ui_PatientProfile):
             self.Eprimphone = eprimphone
             self.LastestdateVisited = datevisited
 
-
         _translate = QtCore.QCoreApplication.translate
-
         # Edit patient profile based on info in database
-
+        self.patientprofilestatus.setText("<html><head></head><body>\n"
+                                            "<p style=\" margin-top:0px; margin-bottom:0px;\"><span style='font-size:9pt;'>Patient ID: " + self.PID + "</span></p>"
+                                            "<p style=\" margin-top:0px; margin-bottom:0px;\"><span style='font-size:8pt;'>Date Created: 07/18/19</span></p>"
+                                            "<p style=\" margin-top:0px; margin-bottom:0px;\"><span style='font-size:8pt;'>Last Updated: 05/05/20</span></p>"
+                                            "</body></html>")
         # Button Click Events
         self.in_age.setText(str(self.Age))
         self.in_weight.setText(str(self.Weight))
@@ -460,20 +539,27 @@ class PatientProfile(QtWidgets.QMainWindow, Ui_PatientProfile):
         self.in_emergencyrelation.setText(str(self.Erelation))
         self.in_zip.setText(str(self.Zip))
         self.in_sex.setText(str(self.Sex))
-        self.headlinename.setHtml(_translate("MainWindow",
-                                             "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
-                                             "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
-                                             "p, li { white-space: pre-wrap; }\n"
-                                             "</style></head><body style=\" font-family:\'MS Shell Dlg 2\'; font-size:18pt; font-weight:600; font-style:normal;\">\n"
-                                             "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">"+str(self.fname)+" "+str(self.lname)+"</p></body></html>"))
-        self.button_mainmenu.clicked.connect(self.exit)
-        self.dateVisitMedical(self.LastestdateVisited)
+        self.headlinename.setHtml(_translate("MainWindow", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+                                             "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n""p, li { white-space: pre-wrap; }\n""</style></head> "
+                                             "<body style=\" font-family:\'MS Shell Dlg 2\'; font-size:20pt; font-weight:600; font-style:normal;\">\n"
+                                             "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">"+self.fname+" "+self.lname+"</p></body></html>"))
 
+        self.saveButton.clicked.connect(self.saveInfo)
+        self.button_mainmenu.clicked.connect(self.exit)
         self.button_ordertest.clicked.connect(self.OrderTest)
+        self.button_teststatus.clicked.connect(self.TestStatus)
+
+        # For 1st time patients, their weight and height will not have been filled in yet since they have never visited -- this prevents crash
+        if self.Weight == None or self.Height == None:
+            self.in_weight.setText("0")
+            self.in_height.setText("0")
+            self.NewVisit()
+        else:
+            self.dateVisitMedical(self.LastestdateVisited)
 
         #Open Date Visit
         self.button_datevisit.clicked.connect(self.dateVisit)
-        self.button_teststatus.clicked.connect(self.TestStatus)
+
     def dateVisitMedical(self,dateVisited):
         self.date = dateVisited
         self.db = pymysql.connect(host="localhost", user="root", passwd=sqlpassword, db="hospitaldb")
@@ -563,10 +649,6 @@ class PatientProfile(QtWidgets.QMainWindow, Ui_PatientProfile):
             self.LastestdateVisited) + "</span></p>"
                                        "</body></html>")
 
-
-
-
-
 class AdminHub(QtWidgets.QMainWindow, Ui_AdminHub):
     def confirmMessage(self):
         # Confirm registration and display info for user
@@ -621,13 +703,37 @@ class AdminHub(QtWidgets.QMainWindow, Ui_AdminHub):
         self.db.commit()
         self.confirmMessage()
 
+    def updateSearch(self, text):
+        search = self.listWidget.findItems(text, Qt.MatchContains | Qt.MatchCaseSensitive)
+        for i in search:
+            print(i.text())
+
+    def clearLog(self):
+        self.listWidget.clear()
+        self.f.truncate(0)
+
+    def Logout(self):
+        logout = QMessageBox()
+        logout.setWindowTitle("Confirm Logout")
+        logout.setText("Are you sure you wish to log out?")
+        logout.setStandardButtons(QMessageBox.Yes | QMessageBox.No)
+        logout = logout.exec()
+
+        if logout == QMessageBox.Yes:
+            self.login = LoginScreen()
+            self.login.show()
+            self.close()
+
+            # Log
+            self.date = datetime.datetime.now()
+            logging.info("***USER " + self.user + " has logged OUT @ " + str(self.date))
     def __init__(self, username):
         super(AdminHub, self).__init__()
         self.setupUi(self)
 
         # Load Log History
-        f = open("system.log", "r")
-        for line in f:
+        self.f = open("system.log", "r+")
+        for line in self.f:
             self.listWidget.addItem(line)
         font = QtGui.QFont()
         font.setPointSize(14)
@@ -653,11 +759,15 @@ class AdminHub(QtWidgets.QMainWindow, Ui_AdminHub):
 
         # Button Click events
         self.button_register.clicked.connect(self.registerUser)
+        self.lineEdit.textChanged.connect(self.updateSearch)
+        self.clearButton.clicked.connect(self.clearLog)
+        self.logout.clicked.connect(self.Logout)
 
 class VisitHistory(QtWidgets.QMainWindow, Ui_VisitHistory):
-    def __init__(self,PID):
+    def __init__(self, PID, user):
         super(VisitHistory, self).__init__()
         self.setupUi(self)
+        self.user = user
         self.PID = PID
         self.controls = QtWidgets.QWidget()
         self.controlsLayout = QtWidgets.QVBoxLayout()
@@ -674,16 +784,18 @@ class VisitHistory(QtWidgets.QMainWindow, Ui_VisitHistory):
             self.datevisithistory.addItem("")
             self.datevisithistory.setItemText(i+1,self.dateVisited[i][0].strftime("%m/%d/%Y"))
 
+        #self.button_openvisithistory.clicked.connect(VisitHis.dateVisitMedical(self.dateVisited[index]))
         self.button_openvisithistory.clicked.connect(self.openDate)
     def openDate(self):
         index = self.datevisithistory.currentIndex() - 1
-        self.Profile = PatientProfile(self.PID)
+        self.Profile = PatientProfile(self.PID,self.user)
         if index >= 0:
             self.Profile.dateVisitMedical(self.dateVisited[index][0])
         else:
             self.Profile.NewVisit()
         self.Profile.show()
         self.close()
+
 class OrderTest(QtWidgets.QMainWindow, Ui_OrderTest):
     def __init__(self,PID):
         super(OrderTest, self).__init__()
@@ -691,15 +803,102 @@ class OrderTest(QtWidgets.QMainWindow, Ui_OrderTest):
         self.PID = PID
         self.controls = QtWidgets.QWidget()
         self.controlsLayout = QtWidgets.QVBoxLayout()
-class TestStatus(QtWidgets.QMainWindow,Ui_Test):
-    def  __init__(self,PID,Date):
+
+        self.db = pymysql.connect(host="localhost", user="root", passwd=sqlpassword, db="hospitaldb")
+        self.c = self.db.cursor()
+        self.in_patid.setText(str(self.PID))
+        self.in_patid_2.setText(str(self.PID))
+        self.in_patid_3.setText(str(self.PID))
+        self.in_patid_4.setText(str(self.PID))
+        self.date = datetime.datetime.now()
+        self.date = self.date.strftime("%Y-%m-%d")
+
+        self.button_ordertest.clicked.connect(lambda:self.Order(0))
+        self.button_ordertest_2.clicked.connect(lambda:self.Order(1))
+        self.button_ordertest_3.clicked.connect(lambda:self.Order(2))
+        self.button_ordertest4.clicked.connect(lambda:self.Order(3))
+
+
+
+    def Order(self,index):
+        self.patid = self.in_patid.text()
+        self.status = "Ordered"
+        if index == 0:
+            self.maintype = "Hematologic"
+            self.note = self.in_notes.toPlainText()
+            self.prior = self.in_priority.currentText()
+            self.type = self.in_type.currentText()
+        elif index == 1:
+            self.maintype = "Urine Test"
+            self.note = self.in_notes_2.toPlainText()
+            self.prior = self.in_priority_2.currentText()
+            self.type = self.in_type_2.currentText()
+        elif index == 2:
+            self.maintype = "Stool Test"
+            self.note = self.in_notes_3.toPlainText()
+            self.prior = self.in_priority_3.currentText()
+            self.type = self.in_type_3.currentText()
+        else:
+            self.maintype = "Radiologic"
+            self.note = self.in_notes_4.toPlainText()
+            self.prior = self.in_priority_4.currentText()
+            self.type = self.in_type_4.currentText()
+
+        self.info = (self.patid, self.maintype, self.type, self.date, self.prior, self.note, self.status)
+        self.c.execute("INSERT INTO test(patientID,mainTestType,subType,dateOrder,Priority,Notes,Status) VALUES(%s, %s, %s, %s, %s, %s, %s)", self.info)
+        self.db.commit()
+
+        message = QMessageBox()
+        message.setWindowTitle("Test Ordered!")
+        message.setText("Lab test successfully ordered!")
+        message.addButton(QMessageBox.Ok)
+        message.exec()
+
+class TestStatus(QtWidgets.QMainWindow, Ui_Test):
+    def  __init__(self, PID, Date):
         super(TestStatus, self).__init__()
         self.setupUi(self)
         self.PID = PID
         self.Date = Date
         self.controls = QtWidgets.QWidget()
         self.controlsLayout = QtWidgets.QVBoxLayout()
+        self.db = pymysql.connect(host="localhost", user="root", passwd=sqlpassword, db="hospitaldb")
+        self.c = self.db.cursor()
+        self.c.execute(
+            "SELECT Status,max(dateOrder),mainTestType,subType,Notes,Priority FROM test WHERE patientID=%s", self.PID)
+        for Status,dateOrder,mainTestType,subType,Notes,Priority in self.c.fetchall():
+            self.status = Status
+            self.DateOrder = dateOrder
+            self.MainTest = mainTestType
+            self.subTest = subType
+            self.Note = Notes
+            self.Pri = Priority
 
+        self.in_patid.setHtml(           "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+                                         "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
+                                         "p, li { white-space: pre-wrap; }\n"
+                                         "</style></head><body style=\" font-family:\'MS Shell Dlg 2\'; font-size:14pt; font-weight:400; font-style:normal;\">\n"
+                                         "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">"+str(self.PID)+"</p></body></html>")
+        self.in_teststatus.setHtml("<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+                                              "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
+                                              "p, li { white-space: pre-wrap; }\n"
+                                              "</style></head><body style=\" font-family:\'MS Shell Dlg 2\'; font-size:14pt; font-weight:400; font-style:normal;\">\n"
+                                              "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">"+str(self.status)+"</p></body></html>")
+        self.in_dateorder.setHtml("<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+                                             "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
+                                             "p, li { white-space: pre-wrap; }\n"
+                                             "</style></head><body style=\" font-family:\'MS Shell Dlg 2\'; font-size:14pt; font-weight:400; font-style:normal;\">\n"
+                                             "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">"+str(self.DateOrder)+"</p></body></html>")
+        self.in_type.setHtml("<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+                             "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
+                             "p, li { white-space: pre-wrap; }\n"
+                              "</style></head><body style=\" font-family:\'MS Shell Dlg 2\'; font-size:10pt; font-weight:400; font-style:normal;\">\n"
+                              "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:\'Arial\'; font-size:8.25pt; color:#000000; background-color:#ffffff;\">"+str(self.MainTest)+" -  "+str(self.subTest)+"</span></p></body></html>")
+        self.in_note.setHtml("<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+                             "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
+                            "p, li { white-space: pre-wrap; }\n"
+                            "</style></head><body style=\" font-family:\'MS Shell Dlg 2\'; font-size:10pt; font-weight:400; font-style:normal;\">\n"
+                             "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:\'Arial\'; font-size:8.25pt; color:#000000; background-color:#ffffff;\">"+"Notes: "+str(self.Pri)+" -  "+str(self.Note)+"</span></p></body></html>")
 
 if __name__ == "__main__":
     # This code simply starts the program and opens it with the login page (LoginScreen())
