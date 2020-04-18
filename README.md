@@ -106,6 +106,7 @@ In this tab, employees can check the status of the order test.
 
 # Future Update Patch Incoming
 Our team is working to finish debugging the software and adding the **appointment** feature to “Medical Doctor”. <br/>
+In addition, there are still issues with Test Result Function. We are expecting to fix this ASAP <br/> 
 Expected Date: May 4th, 2020  <br/>
 
 # Thank You For Using Medical Doctor! 
