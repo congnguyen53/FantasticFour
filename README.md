@@ -30,10 +30,42 @@ Refresh the database to check if all tables are loaded correctly.
 Open the main exe file inside the Medical Doctor folder.
 ![Login SQL](https://github.com/congnguyen53/FantasticFour/blob/master/MDPic/SQLlogin.png)
 
-### 7. Log-In into “Medical Doctor”
+
+## Using Medical Doctor as Administrator
+All the functionality of Medical Doctor of Version 1.0. If there are any errors please contact F4 Inc for a patch update.
+
+### 1. Log-In into “Medical Doctor”
 Default embedded admin account:
 Username: __*admin*__
 Password: __*admin*__
 
 ![Log-in](https://github.com/congnguyen53/FantasticFour/blob/master/MDPic/Login-Screen.JPG)
+
+### 2. Create New User (Doctor, Nurse or Administration)
+To create new Medical Doctor users. Fill out the employee information fields. All new accounts will be saved into the database. 
+
+![New User](https://github.com/congnguyen53/FantasticFour/blob/master/MDPic/NewUserCreated.JPG)
+
+### 3. Historical Log
+All application activities and database modification will be recorded. They are displayed only for administrator users.
+
+![Logging](https://github.com/congnguyen53/FantasticFour/blob/master/MDPic/historylog.JPG)
+
+### 4. Adjustment to User account
+Administrators can update and delete user accounts.
+
+## Using Medical Doctor as Healthcare Professionals
+
+### 1. Log-In
+Using the Login information provided by the IT administrator of the hospital. **Username** will be the first 3 letters of the employee last name (can be less depending on the length of the name). <br />
+**Password** will be randomly generated pins (4 numbers). Can be changed by the administrator later.
+
+![Log-in](https://github.com/congnguyen53/FantasticFour/blob/master/MDPic/Login-Screen.JPG)
+
+### 2. MainScreen
+
+
+
+
+
 
