@@ -95,7 +95,7 @@ Employees can access different visit dates of a patient by accessing the Date Vi
 **Caution:** Opening New Visit can close the Patient Profile tab without saving the information if the user has not saved the data into the database. <br/>
 For a New Visit by a Patient, the employee have to go to new visit 
 ![Date Visit](https://github.com/congnguyen53/FantasticFour/blob/master/MDPic/VisitHistory.JPG)
-
+<br/>
 ### 7. Order Test
 Employees can order laboratory tests for patients in this tab. 
 ![Lab Test Order](https://github.com/congnguyen53/FantasticFour/blob/master/MDPic/OrderTest.JPG)
