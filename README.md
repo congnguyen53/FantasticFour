@@ -30,4 +30,10 @@ Refresh the database to check if all tables are loaded correctly.
 Open the main exe file inside the Medical Doctor folder.
 ![Login SQL](https://github.com/congnguyen53/FantasticFour/blob/master/MDPic/SQLlogin.png)
 
+### 7. Log-In into “Medical Doctor”
+Default embedded admin account:
+Username: *admin*
+Password: *admin*
+
+![Log-in](https://github.com/congnguyen53/FantasticFour/blob/master/MDPic/Login-Screen.JPG)
 
