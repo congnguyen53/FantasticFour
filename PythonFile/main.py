@@ -1,7 +1,7 @@
 from PyQt5.QtWidgets import QMessageBox, QWidget, QLabel, QPushButton, QHBoxLayout, QSpacerItem, QSizePolicy, QScrollArea
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtCore import *
-from PyQt5.QtGui import QKeyEvent
+from PyQt5.QtGui import QKeyEvent, QPixmap,QImage,QPalette,QBrush
 import datetime
 from Login import *
 from Main_screen import *
@@ -13,13 +13,78 @@ from adminhub import *
 from VisitHistory import *
 from OrderTest import *
 from TestStatus import *
+from LoginSQL import *
 import pymysql
 from random import randint
 import logging
 
-sqlpassword = "sqlpassword"
 logging.basicConfig(filename='system.log', level=logging.DEBUG)
 
+class LoginSQL(QtWidgets.QMainWindow, Login_SQL):
+    def __init__(self,parent = None):
+        super(LoginSQL, self).__init__(parent)
+        self.setupUi(self)
+        self.background()
+
+        self.pushButton.clicked.connect(lambda:self.database())
+    def database(self):
+        hostname = str(self.in_hostname.text())
+        username = str(self.in_user.text())
+        sqlpassword = str(self.in_password.text())
+        print(hostname, username, sqlpassword)
+        try:
+            # Database connection
+            global db
+            global c
+            db = pymysql.connect(host=hostname, user=username, passwd=sqlpassword, db="hospitaldb")
+            c = db.cursor()
+
+            # Hardcoded admin user
+            adminLogin = ("admin", "admin")
+            adminInfo = ("admin", "admin", "admin", 0)
+
+            c.execute("SELECT * FROM logininfo")
+            # Prevent from creating more than one admin every run
+            if len(c.fetchall()) == 0:
+                c.execute("INSERT INTO logininfo(username, password) VALUES(%s, %s)", adminLogin)
+                c.execute("INSERT INTO employee(username, lastname, firstname, userType) VALUES(%s, %s, %s, %s)",
+                          adminInfo)
+                db.commit()
+
+            print("CONNECTED")
+            self.Login()
+
+        except:
+            SQL = QMessageBox()
+            SQL.setWindowTitle("Error")
+            SQL.setText("Incorrect Hostname, User or Password!")
+            SQL.exec()
+
+
+    def Login(self):
+        print("LOGGING")
+        self.login = LoginScreen()
+        print("CREATION")
+        self.login.show()
+        self.close()
+
+    def background(self):
+        oImage = QImage("sql.jpg")
+        sImage = oImage.scaled(QSize(1600,1200))
+        palette = QPalette()
+        palette.setBrush(QPalette.Window, QBrush(sImage))
+        self.setPalette(palette)
+    def keyPressEvent(self, event):
+        """
+        Keypress event handler
+        :return:
+        """
+        if type(event) == QKeyEvent:
+            # here accept the event and do something
+            if event.key() == Qt.Key_Return or event.key() == Qt.Key_Enter:  # code enter key
+                # self.do_calculate()
+                self.database()
+                event.accept()
 
 class LoginScreen(QtWidgets.QMainWindow, Ui_LoginScreen):
     # Function for login button -- Add system to get and authenticate user/pass with database
@@ -70,29 +135,35 @@ class LoginScreen(QtWidgets.QMainWindow, Ui_LoginScreen):
                 # self.do_calculate()
                 self.Login()
                 event.accept()
+    def background(self):
+        oImage = QImage("background.jpg")
+        sImage = oImage.scaled(QSize(1100,800))
+        palette = QPalette()
+        palette.setBrush(QPalette.Window, QBrush(sImage))
+        self.setPalette(palette)
+
+
 
     def __init__(self, parent=None):
         super(LoginScreen, self).__init__(parent)
         self.setupUi(self)
+        self.background()
 
-        # DB connection
-        self.db = pymysql.connect(host="localhost", user="root", passwd=sqlpassword, db="hospitaldb")
-        self.c = self.db.cursor()
-        self.c.execute("SELECT * FROM logininfo")
+        c.execute("SELECT * FROM logininfo")
 
         # Usernames and passwords pulled from database
         self.usernames = []
         self.passwords = []
-        for username, password in self.c.fetchall():
+        for username, password in c.fetchall():
             self.usernames.append(username)
             self.passwords.append(password)
 
         # User first and last names to display on main screen
-        self.c.execute("SELECT firstName, lastName, userType FROM employee")
+        c.execute("SELECT firstName, lastName, userType FROM employee")
         self.fnames = []
         self.lnames = []
         self.types = []
-        for firstName, lastName, user in self.c.fetchall():
+        for firstName, lastName, user in c.fetchall():
             self.fnames.append(firstName)
             self.lnames.append(lastName)
             self.types.append(user)
@@ -100,7 +171,6 @@ class LoginScreen(QtWidgets.QMainWindow, Ui_LoginScreen):
         # Button Click Events
         self.loginButton.clicked.connect(self.Login)
         self.exitButton.clicked.connect(sys.exit)
-
 
 class MainScreen(QtWidgets.QMainWindow, Ui_MainScreen):
     # Function for logout button -- no need for technical system since the only way to get back is through login system
@@ -163,7 +233,6 @@ class MainScreen(QtWidgets.QMainWindow, Ui_MainScreen):
         self.Main_appts.clicked.connect(self.openAppts)
         self.Main_search.clicked.connect(self.openPS)
 
-
 class NPRegistration(QtWidgets.QMainWindow, Ui_NP_Registration):
     def closeEvent(self, event):
         close = QMessageBox()
@@ -186,17 +255,13 @@ class NPRegistration(QtWidgets.QMainWindow, Ui_NP_Registration):
         self.date = datetime.datetime.now()
         self.date = self.date.strftime("%Y%m%d")
 
-
-        # DB connection
-        self.db = pymysql.connect(host="localhost", user="root", passwd=sqlpassword, db="hospitaldb")
-        self.c = self.db.cursor()
         self.info = (id, lname, fname, DOB, age, sex, address, city, state, self.country, zip, primphone, secphone,
                      insurance, memID, eContactName, ePhone, eRelation, self.date, self.date)
-        self.c.execute("INSERT INTO patientprofile(patientID, lastname, firstname, DOB, Age, Sex, streetaddress, "
+        c.execute("INSERT INTO patientprofile(patientID, lastname, firstname, DOB, Age, Sex, streetaddress, "
                        "City, State, Country, Zip, primaryPhone, secondaryPhone, Insurance, MemberID, eContactName, "
                        "ePrimaryPhone, eRelation, dateVisited, dateCreated) VALUES(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)",
                        self.info)
-        self.db.commit()
+        db.commit()
 
     def confirmMessage(self):
         message = QMessageBox()
@@ -214,9 +279,6 @@ class NPRegistration(QtWidgets.QMainWindow, Ui_NP_Registration):
 
     # Function for sacving and registering a new profile to the database and patient profile
     def saveInfo(self):
-        # DB connection
-        self.db = pymysql.connect(host="localhost", user="root", passwd=sqlpassword, db="hospitaldb")
-        self.c = self.db.cursor()
         try:
             # Get all info from input boxes
             # Create patient ID (first letter of first name + 3 first letters of last name + incrementing number value
@@ -225,9 +287,9 @@ class NPRegistration(QtWidgets.QMainWindow, Ui_NP_Registration):
             self.lname = self.NP_name_last.text()
             self.last = self.lname[0:3]
             # Get auto incrementing number (total patients plus one)
-            self.c.execute("SELECT patientID FROM patientprofile")
+            c.execute("SELECT patientID FROM patientprofile")
             self.i = 0
-            for id in self.c.fetchall():
+            for id in c.fetchall():
                 self.i = self.i + 1
             self.name = self.first + self.last.lower()
             self.PID = self.name + str(self.i + 1)
@@ -276,7 +338,6 @@ class NPRegistration(QtWidgets.QMainWindow, Ui_NP_Registration):
         self.NP_cancel.clicked.connect(self.close)
         self.NP_create.clicked.connect(self.saveInfo)
 
-
 class Appointments(QtWidgets.QMainWindow, Ui_Appointments):
     def onSelectionChange(self):
         self.header = self.Schedule_list.item(0)
@@ -289,9 +350,6 @@ class Appointments(QtWidgets.QMainWindow, Ui_Appointments):
         self.setupUi(self)
 
         self.Schedule_calendar.selectionChanged.connect(self.onSelectionChange)
-
-
-
 
 class PatientWidget(QtWidgets.QWidget):
     # Function for each access button -- Add system that searches self.PID in DB and opens patient profile with that information
@@ -358,21 +416,16 @@ class UserWidget(QtWidgets.QWidget):
         self.username = username
         self.last = last
         self.first = first
-        self.date = date
+        self.date = str(date)
         self.user = user
 
         self.lbl = QtWidgets.QTextBrowser()
-        _translate = QtCore.QCoreApplication.translate
-        print("HERE")
-        self.lbl.setText(_translate("PatientSearch",
-                                    "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
-                                    "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
-                                    "p, li { white-space: pre-wrap; }\n"
-                                    "</style></head><body style=\" font-family:\'MS Shell Dlg 2\'; font-size:14pt; font-weight:400; font-style:normal;\">\n"
-                                    "<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:10pt;\">Name: " + self.first + " " + self.last + "</span></p>\n"
-                                    "<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:10pt;\">Username: " + self.username + "</span></p>\n"
-                                    "<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:10pt;\">Date Joined: " + self.date + "</span></p>\n</body></html>"))
-        print("LABEL")
+        font = QtGui.QFont()
+        font.setPointSize(10)
+
+        self.lbl.setText("Name: " + self.first + " " + self.last + "\nUsername: " + self.username + "\nDate Joined: " + self.date)
+        self.lbl.setFont(font)
+
         self.lbl.setFixedWidth(301)
         self.lbl.setFixedHeight(101)
 
@@ -382,12 +435,12 @@ class UserWidget(QtWidgets.QWidget):
         font.setPointSize(10)
         self.accessBtn.setFont(font)
 
+        self.hbox = QtWidgets.QHBoxLayout()
         self.hbox.addWidget(self.lbl)
         self.hbox.addWidget(self.accessBtn)
         self.setLayout(self.hbox)
 
         #self.accessBtn.clicked.connect(self.access)
-
 
 class PatientSearch(QtWidgets.QMainWindow, Ui_PatientSearch):
     def updateSearch(self, text):
@@ -406,10 +459,7 @@ class PatientSearch(QtWidgets.QMainWindow, Ui_PatientSearch):
         self.controls = QtWidgets.QWidget()
         self.controlsLayout = QtWidgets.QVBoxLayout()
 
-        # DB connection
-        self.db = pymysql.connect(host="localhost", user="root", passwd=sqlpassword, db="hospitaldb")
-        self.c = self.db.cursor()
-        self.c.execute("SELECT patientID, firstName, lastName, DOB, dateVisited FROM patientprofile")
+        c.execute("SELECT patientID, firstName, lastName, DOB, dateVisited FROM patientprofile")
 
         # Patient info for testing -- update so each list pulls values from SQL DB
         self.PATIENT_ID = []
@@ -417,7 +467,7 @@ class PatientSearch(QtWidgets.QMainWindow, Ui_PatientSearch):
         self.PATIENT_LNAMES = []
         self.PATIENT_DOB = []
         self.PATIENT_LAST_VISIT = []
-        for pid, first, last, dob, date in self.c.fetchall():
+        for pid, first, last, dob, date in c.fetchall():
             self.PATIENT_ID.append(pid)
             self.PATIENT_FNAMES.append(first)
             self.PATIENT_LNAMES.append(last)
@@ -463,7 +513,6 @@ class PatientSearch(QtWidgets.QMainWindow, Ui_PatientSearch):
         self.setCentralWidget(container)
         self.setWindowTitle("Patient Search")
 
-
 class PatientProfile(QtWidgets.QMainWindow, Ui_PatientProfile):
     def closeEvent(self, event):
         close = QMessageBox()
@@ -487,13 +536,11 @@ class PatientProfile(QtWidgets.QMainWindow, Ui_PatientProfile):
         self.Order.show()
 
     def TestStatus(self):
-        self.db = pymysql.connect(host="localhost", user="root", passwd=sqlpassword, db="hospitaldb")
-        self.b = self.db.cursor()
         self.info1 = (self.PID, self.PID)
-        self.b.execute(
+        c.execute(
             "SELECT dateOrder FROM test WHERE patientID=%s AND dateOrder = (SELECT max(dateOrder) FROM test WHERE patientID=%s)",
             self.info1)
-        getdate = self.b.fetchone()
+        getdate = c.fetchone()
         if getdate != None:
             self.Status = TestStatus(self.PID)
             self.Status.show()
@@ -529,33 +576,27 @@ class PatientProfile(QtWidgets.QMainWindow, Ui_PatientProfile):
         self.date = self.date.strftime("%Y-%m-%d")
         DOB = DOB.strftime("%Y-%m-%d")
 
-        # DB connection
-        self.db = pymysql.connect(host="localhost", user="root", passwd=sqlpassword, db="hospitaldb")
-        self.c = self.db.cursor()
         self.info = (lname, fname, DOB, age, weight, height, sex, address, city, state, country, zip, primphone, id)
-        self.c.execute("UPDATE patientprofile SET lastname = %s, firstname = %s, DOB = %s, Age = %s, Weight = %s,"
+        c.execute("UPDATE patientprofile SET lastname = %s, firstname = %s, DOB = %s, Age = %s, Weight = %s,"
                        "Height = %s, Sex = %s, streetaddress = %s, City = %s, State = %s, Country = %s, Zip = %s, "
                        "primaryPhone = %s WHERE patientID = %s", self.info)
-        self.db.commit()
+        db.commit()
 
         # MySQL would not execut as a single function so it had to be split in 2
         self.info2 = (secphone, insurance, memID, eName, ePhone, eRel, id)
-        self.c.execute(
+        c.execute(
             "UPDATE patientprofile SET secondaryPhone = %s, Insurance = %s, MemberID = %s, eContactName = %s, "
             "ePrimaryPhone = %s, eRelation = %s WHERE patientID = %s", self.info2)
-        self.db.commit()
+        db.commit()
 
     def saveInfo(self):
-        # DB connection
-        self.db = pymysql.connect(host="localhost", user="root", passwd=sqlpassword, db="hospitaldb")
-        self.c = self.db.cursor()
         try:
             self.date = datetime.datetime.now()
             self.date = self.date.strftime("%Y-%m-%d")
             # Update patientprofile datevisited
             self.info = (self.date, self.PID)
-            self.c.execute("UPDATE patientprofile SET dateVisited = %s WHERE patientID = %s", self.info)
-            self.db.commit()
+            c.execute("UPDATE patientprofile SET dateVisited = %s WHERE patientID = %s", self.info)
+            db.commit()
 
             # Update last updated date
             self.LastestdateVisited = self.date
@@ -620,21 +661,17 @@ class PatientProfile(QtWidgets.QMainWindow, Ui_PatientProfile):
         self.symptoms = self.in_symptoms.toPlainText()
         self.medication = self.in_medication.toPlainText()
         self.doctor = self.in_doctor.text()
-        # DB connection
-        self.db = pymysql.connect(host="localhost", user="root", passwd=sqlpassword, db="hospitaldb")
-        self.c = self.db.cursor()
+
         self.info = (self.chiefComplaint, self.PID, self.dateVis)
-        self.c.execute("UPDATE patientmedicalinfo SET chiefComplaint = %s WHERE PatientID = %s AND DateVisited = %s", self.info)
-        self.db.commit()
+        c.execute("UPDATE patientmedicalinfo SET chiefComplaint = %s WHERE PatientID = %s AND DateVisited = %s", self.info)
+        db.commit()
 
     def saveVisit(self):
         self.notes = self.in_visitnote.toPlainText()
-        # DB connection
-        self.db = pymysql.connect(host="localhost", user="root", passwd=sqlpassword, db="hospitaldb")
         self.info = (self.notes, self.PID, self.dateVis)
-        self.c.execute("UPDATE patientmedicalinfo SET visitNotes = %s WHERE PatientID = %s AND DateVisited = %s",
+        c.execute("UPDATE patientmedicalinfo SET visitNotes = %s WHERE PatientID = %s AND DateVisited = %s",
                        self.info)
-        self.db.commit()
+        db.commit()
 
     def saveScript(self):
         self.medAdvised = self.in_medicationadvised.toPlainText()
@@ -643,19 +680,15 @@ class PatientProfile(QtWidgets.QMainWindow, Ui_PatientProfile):
         self.injectiontype = self.in_injectiontype.currentText()
         self.injectionnotes = self.in_notesinjection.toPlainText()
 
-        # DB connection
-        self.db = pymysql.connect(host="localhost", user="root", passwd=sqlpassword, db="hospitaldb")
-        self.c = self.db.cursor()
-
         # Oral scrip
         self.info = (self.medAdvised, self.doseAdvised, self.duration, self.PID, self.dateVis)
-        self.c.execute("UPDATE patientmedicalinfo SET medication_oral = %s, dose_oral = %s, duration_oral = %s WHERE PatientID = %s AND DateVisited = %s", self.info)
-        self.db.commit()
+        c.execute("UPDATE patientmedicalinfo SET medication_oral = %s, dose_oral = %s, duration_oral = %s WHERE PatientID = %s AND DateVisited = %s", self.info)
+        db.commit()
 
         # Injection scrip
         self.info = (self.injectiontype, self.injectionnotes, self.PID, self.dateVis)
-        self.c.execute("UPDATE patientmedicalinfo SET type_injection = %s, note_injection = %s  WHERE PatientID = %s AND DateVisited = %s", self.info)
-        self.db.commit()
+        c.execute("UPDATE patientmedicalinfo SET type_injection = %s, note_injection = %s  WHERE PatientID = %s AND DateVisited = %s", self.info)
+        db.commit()
 
     def __init__(self, PID, user):
         super(PatientProfile, self).__init__()
@@ -663,14 +696,11 @@ class PatientProfile(QtWidgets.QMainWindow, Ui_PatientProfile):
         self.PID = PID
         self.user = user
 
-        # DB Connection
-        self.db = pymysql.connect(host="localhost", user="root", passwd=sqlpassword, db="hospitaldb")
-        self.c = self.db.cursor()
-        self.c.execute(
+        c.execute(
             "SELECT firstName, lastName, DOB, Age, Weight, Height, Sex, streetaddress, City, State, Country, "
             "Zip, primaryPhone, secondaryPhone, Insurance, MemberID, eContactName, eRelation, ePrimaryPhone, "
             "dateVisited FROM patientprofile WHERE patientID=%s", self.PID)
-        for first, last, dob, age, weight, height, sex, street, city, state, country, zip, primphone, secphone, insur, memberid, econtactname, erela, eprimphone, datevisited in self.c.fetchall():
+        for first, last, dob, age, weight, height, sex, street, city, state, country, zip, primphone, secphone, insur, memberid, econtactname, erela, eprimphone, datevisited in c.fetchall():
             self.fname = first
             self.lname = last
             self.DOB = dob
@@ -764,13 +794,11 @@ class PatientProfile(QtWidgets.QMainWindow, Ui_PatientProfile):
 
     def dateVisitMedical(self, dateVisited):
         self.dateVis = dateVisited
-        self.db = pymysql.connect(host="localhost", user="root", passwd=sqlpassword, db="hospitaldb")
-        self.c = self.db.cursor()
-        self.c.execute(
+        c.execute(
             "SELECT visitNotes,diagnosis,testrequested, chiefComplaint, medicalhistory, Allergies, Symptoms, MedicationAssigned, Doctor,medication_oral, dose_oral, duration_oral, type_injection,note_injection FROM patientmedicalinfo WHERE dateVisited=%s AND PatientID=%s",
             (self.dateVis, self.PID))
 
-        for visit, dia, test, chief, medicalhis, aller, symp, medication, doctor, med_oral, dose_oral, duration_oral, type_injection, note_injection in self.c.fetchall():
+        for visit, dia, test, chief, medicalhis, aller, symp, medication, doctor, med_oral, dose_oral, duration_oral, type_injection, note_injection in c.fetchall():
             self.VisitNote = visit
             self.Diagnosis = dia
             self.TestRe = test
@@ -856,11 +884,9 @@ class PatientProfile(QtWidgets.QMainWindow, Ui_PatientProfile):
                                        "</body></html>")
 
         # insert new visit to database
-        self.db = pymysql.connect(host="localhost", user="root", passwd=sqlpassword, db="hospitaldb")
-        self.c = self.db.cursor()
         self.info = (self.PID, self.dateVis)
-        self.c.execute("INSERT INTO patientmedicalinfo(patientID, DateVisited) VALUES(%s, %s)", self.info)
-        self.db.commit()
+        c.execute("INSERT INTO patientmedicalinfo(patientID, DateVisited) VALUES(%s, %s)", self.info)
+        db.commit()
 
 class AdminHub(QtWidgets.QMainWindow, Ui_AdminHub):
     def confirmMessage(self):
@@ -891,37 +917,35 @@ class AdminHub(QtWidgets.QMainWindow, Ui_AdminHub):
         else:
             self.type = 2
 
-        # DB Connection
-        self.db = pymysql.connect(host="localhost", user="root", passwd=sqlpassword, db="hospitaldb")
-        self.c = self.db.cursor()
-
         # Create username -- first 3 of last name plus 100 (increments only if another user has same name)
         self.num = 100
         self.last = self.name[1][0:3].lower()
         self.username = (self.last + str(self.num))
         # Check if user exists
-        self.c.execute("SELECT username FROM employee")
-        for user in self.c.fetchall():
+        c.execute("SELECT username FROM employee")
+        for user in c.fetchall():
             if self.username == user[0]:
                 self.num = self.num + 1
                 self.username = (self.last + str(self.num))
 
         self.info = (self.username, self.name[1], self.name[0], self.type, self.fos, self.dep, self.dateJoin, self.DOB)
-        self.c.execute(
+        c.execute(
             "INSERT INTO employee(username, lastname, firstname, userType, fieldofstudy, department, datejoined, DOB) VALUES(%s, %s, %s, %s, %s, %s, %s, %s)",
             self.info)
-        self.db.commit()
+        db.commit()
         # Save user and generate password for logininfo
         self.password = randint(1000, 9999)
         self.info = (self.username, self.password)
-        self.c.execute("INSERT INTO logininfo(username, password) VALUES(%s, %s)", self.info)
-        self.db.commit()
+        c.execute("INSERT INTO logininfo(username, password) VALUES(%s, %s)", self.info)
+        db.commit()
         self.confirmMessage()
 
     def updateSearch(self, text):
-        search = self.listWidget.findItems(text, Qt.MatchContains | Qt.MatchCaseSensitive)
-        for i in search:
-            print(i.text())
+        for user in self.users:
+            if text.lower() in user.first.lower() or text.lower() in user.last.lower() or text.lower() in user.username.lower():  # Searchable by patient name or PID
+                user.show()
+            else:
+                user.hide()
 
     def clearLog(self):
         self.listWidget.clear()
@@ -959,12 +983,9 @@ class AdminHub(QtWidgets.QMainWindow, Ui_AdminHub):
 
         self.user = username
 
-        # DB Connection
-        self.db = pymysql.connect(host="localhost", user="root", passwd=sqlpassword, db="hospitaldb")
-        self.c = self.db.cursor()
-        self.c.execute("SELECT firstname FROM employee WHERE username = '%s'" % self.user)
+        c.execute("SELECT firstname FROM employee WHERE username = '%s'" % self.user)
 
-        for first in self.c.fetchone():
+        for first in c.fetchone():
             self.first = first
 
         # Display name on welcome message
@@ -975,25 +996,24 @@ class AdminHub(QtWidgets.QMainWindow, Ui_AdminHub):
         self.label_4.setFont(font)
 
         # Get information for user search -- same as PatientSearch class, implemented differently since it isn't its own window
-        self.c.execute("SELECT username, lastname, firstname, datejoined FROM employee")
-        print("EXE")
+        c.execute("SELECT username, lastname, firstname, datejoined FROM employee")
+
         # User info
         self.USERNAMES = []
         self.USER_FNAMES = []
         self.USER_LNAMES = []
         self.USER_DATE_JOINED = []
-        for user, last, first, date in self.c.fetchall():
+        for user, last, first, date in c.fetchall():
             self.USERNAMES.append(user)
             self.USER_LNAMES.append(last)
             self.USER_FNAMES.append(first)
             self.USER_DATE_JOINED.append(date)
-        print("LOOP1")
+
         # List of each searchable user widget
         self.users = []
         # Create user widget for each user in database to search through
         i = 0
         while i != len(self.USERNAMES):
-            print("START LOOP2")
             print((self.USERNAMES[i], self.USER_LNAMES[i], self.USER_FNAMES[i], self.USER_DATE_JOINED[i], self.user))
             item = UserWidget(self.USERNAMES[i], self.USER_LNAMES[i], self.USER_FNAMES[i],
                                  self.USER_DATE_JOINED[i], self.user)
@@ -1004,10 +1024,9 @@ class AdminHub(QtWidgets.QMainWindow, Ui_AdminHub):
         print("LOOP2")
         # Button Click events
         self.button_register.clicked.connect(self.registerUser)
-        self.lineEdit.textChanged.connect(self.updateSearch)
+        self.in_searchByPatientID_3.textChanged.connect(self.updateSearch)
         self.clearButton.clicked.connect(self.clearLog)
         self.logout.clicked.connect(self.Logout)
-
 
 class VisitHistory(QtWidgets.QMainWindow, Ui_VisitHistory):
     def __init__(self, PID, user):
@@ -1019,12 +1038,10 @@ class VisitHistory(QtWidgets.QMainWindow, Ui_VisitHistory):
         self.controlsLayout = QtWidgets.QVBoxLayout()
 
         self.in_patientID_visithistory.setText(str(PID))
-        self.db = pymysql.connect(host="localhost", user="root", passwd=sqlpassword, db="hospitaldb")
-        self.c = self.db.cursor()
-        self.c.execute(
+        c.execute(
             "SELECT DateVisited FROM patientmedicalinfo WHERE patientID=%s", self.PID)
         self.dateVisited = []
-        for date in self.c.fetchall():
+        for date in c.fetchall():
             self.dateVisited.append(date)
         for i in range(len(self.dateVisited)):
             self.datevisithistory.addItem("")
@@ -1043,7 +1060,6 @@ class VisitHistory(QtWidgets.QMainWindow, Ui_VisitHistory):
         self.Profile.show()
         self.close()
 
-
 class OrderTest(QtWidgets.QMainWindow, Ui_OrderTest):
     def __init__(self, PID):
         super(OrderTest, self).__init__()
@@ -1052,8 +1068,6 @@ class OrderTest(QtWidgets.QMainWindow, Ui_OrderTest):
         self.controls = QtWidgets.QWidget()
         self.controlsLayout = QtWidgets.QVBoxLayout()
 
-        self.db = pymysql.connect(host="localhost", user="root", passwd=sqlpassword, db="hospitaldb")
-        self.c = self.db.cursor()
         self.in_patid.setText(str(self.PID))
         self.in_patid_2.setText(str(self.PID))
         self.in_patid_3.setText(str(self.PID))
@@ -1091,10 +1105,10 @@ class OrderTest(QtWidgets.QMainWindow, Ui_OrderTest):
             self.type = self.in_type_4.currentText()
 
         self.info = (self.patid, self.maintype, self.type, self.date, self.prior, self.note, self.status)
-        self.c.execute(
+        c.execute(
             "INSERT INTO test(patientID,mainTestType,subType,dateOrder,Priority,Notes,Status) VALUES(%s, %s, %s, %s, %s, %s, %s)",
             self.info)
-        self.db.commit()
+        db.commit()
 
         message = QMessageBox()
         message.setWindowTitle("Test Ordered!")
@@ -1102,28 +1116,23 @@ class OrderTest(QtWidgets.QMainWindow, Ui_OrderTest):
         message.addButton(QMessageBox.Ok)
         message.exec()
 
-
 class TestStatus(QtWidgets.QMainWindow, Ui_Test):
     def  __init__(self, PID):
         super(TestStatus, self).__init__()
         self.setupUi(self)
         self.PID = PID
-        self.controls = QtWidgets.QWidget()
-        self.controlsLayout = QtWidgets.QVBoxLayout()
-        self.db = pymysql.connect(host="localhost", user="root", passwd=sqlpassword, db="hospitaldb")
-        self.c = self.db.cursor()
+
         self.info1 = (self.PID, self.PID)
-        self.c.execute(
+        c.execute(
             "SELECT dateOrder FROM test WHERE patientID=%s AND dateOrder = (SELECT max(dateOrder) FROM test WHERE patientID=%s)", self.info1)
-        getdate = self.c.fetchone()
+        getdate = c.fetchone()
         if getdate != None:
             for date in getdate:
                 self.statusdate = date
             self.testdate(self.statusdate)
 
-        self.b = self.db.cursor()
-        self.b.execute("SELECT dateOrder, mainTestType FROM test WHERE patientID=%s", self.PID)
-        self.alltest = self.b.fetchall()
+        c.execute("SELECT dateOrder, mainTestType FROM test WHERE patientID=%s", self.PID)
+        self.alltest = c.fetchall()
         i = 1
         for date, type in self.alltest:
             self.comboBox.addItem("")
@@ -1140,9 +1149,9 @@ class TestStatus(QtWidgets.QMainWindow, Ui_Test):
     def testdate(self,date):
         self.info2 = (self.PID,date)
 
-        self.c.execute(
+        c.execute(
             "SELECT Status,dateOrder,mainTestType,subType,Notes,Priority FROM test WHERE patientID=%s AND dateOrder =%s",self.info2)
-        statusdata = self.c.fetchall()
+        statusdata = c.fetchall()
 
         if len(statusdata) > 0:
             for Status,dateOrder,mainTestType,subType,Notes,Priority in statusdata:
@@ -1185,6 +1194,6 @@ if __name__ == "__main__":
     import sys
 
     app = QtWidgets.QApplication(sys.argv)
-    login = LoginScreen()
-    login.show()
+    loginSQL = LoginSQL()
+    loginSQL.show()
     sys.exit(app.exec_())
