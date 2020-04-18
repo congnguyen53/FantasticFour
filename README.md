@@ -26,4 +26,8 @@ After the Model is loaded, Forward Engineer the tables of the database into the 
 Refresh the database to check if all tables are loaded correctly.
 ![Refresh](https://github.com/congnguyen53/FantasticFour/blob/master/MDPic/refresh.png)
 
+### 6. Connect “Medical Doctor” to MySQL Server
+Open the main exe file inside the Medical Doctor folder.
+![Login SQL](https://github.com/congnguyen53/FantasticFour/blob/master/MDPic/SQLlogin.png)
+
 
