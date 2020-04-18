@@ -84,11 +84,26 @@ Here the employee can search for patient profiles by **Names**, **Date of Birth*
 
 ### 5. Patient Profile
 
-Here the employee can access all the patient information and medical information.
-
-There are tabs on top of the profile to access different functionalities of Medical Doctor application
+Here the employee can access all the patient information and medical information.<br/>
+In this tab, employees can modify and update patient’s information by filling all the fields and clicking the Save button. <br/>
+There are tabs on top of the profile to access different functionalities of Medical Doctor application.<br/>
 
 ![Patient Profile](https://github.com/congnguyen53/FantasticFour/blob/master/MDPic/PatientProfile.JPG)
+
+### 6. Date Visit - New Visit
+Employees can access different visit dates of a patient by accessing the Date Visit tab. <br/>
+**Caution:** Opening New Visit can close the Patient Profile tab without saving the information if the user has not saved the data into the database. <br/>
+For a New Visit by a Patient, the employee have to go to new visit 
+![Date Visit](https://github.com/congnguyen53/FantasticFour/blob/master/MDPic/VisitHistory.JPG)
+
+### 7. Order Test
+Employees can order laboratory tests for patients in this tab. 
+![Lab Test Order](https://github.com/congnguyen53/FantasticFour/blob/master/MDPic/OrderTest.JPG)
+
+### 8. Test Status
+In this tab, employees can check the status of the order test.
+![Status Test](https://github.com/congnguyen53/FantasticFour/blob/master/MDPic/TestStatus.JPG)
+
 
 
 
