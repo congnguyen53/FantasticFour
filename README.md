@@ -105,7 +105,7 @@ In this tab, employees can check the status of the order test.
 ![Status Test](https://github.com/congnguyen53/FantasticFour/blob/master/MDPic/TestStatus.JPG)
 
 # Future Update Patch Incoming
-Our team is working to finish debugging the software and adding the appointment feature to “Medical Doctor”.
+Our team is working to finish debugging the software and adding the **appointment** feature to “Medical Doctor”. <br/>
 Expected Date: May 4th, 2020  <br/>
 
 # Thank You For Using Medical Doctor! 
