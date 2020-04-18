@@ -17,3 +17,13 @@ After new database connection is established. Proceed to load the model file giv
 ![Load Model](https://github.com/congnguyen53/FantasticFour/blob/master/MDPic/loadmodel.png)
 
 This is the Database Design created for the SQL Database Management System.
+
+### 4. Forward Engineer the table.
+After the Model is loaded, Forward Engineer the tables of the database into the established server.
+![Forward Engineer](https://github.com/congnguyen53/FantasticFour/blob/master/MDPic/forward%20engineer.png)
+
+### 5. Database Server Established
+Refresh the database to check if all tables are loaded correctly.
+![Refresh](https://github.com/congnguyen53/FantasticFour/blob/master/MDPic/refresh.png)
+
+
