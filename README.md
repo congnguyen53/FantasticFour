@@ -32,8 +32,8 @@ Open the main exe file inside the Medical Doctor folder.
 
 ### 7. Log-In into “Medical Doctor”
 Default embedded admin account:
-Username: *admin*
-Password: *admin*
+Username: __*admin*__
+Password: __*admin*__
 
 ![Log-in](https://github.com/congnguyen53/FantasticFour/blob/master/MDPic/Login-Screen.JPG)
 
