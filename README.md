@@ -9,7 +9,7 @@ Follow this [link](https://dev.mysql.com/doc/refman/8.0/en/windows-installation.
 
 ### 2. Setting up Databases
 After mySQL is installed. Set up a new connection for the database in MySQL WorkBench.
-[MySQL New Connection](https://github.com/congnguyen53/FantasticFour/blob/master/MDPic/newconnection.png)
-New Connection name will be used as hostname to connect to the Database later
+![MySQL New Connection](https://github.com/congnguyen53/FantasticFour/blob/master/MDPic/newconnection.png)
+New Connection name will be used as hostname to connect to the database later
 
 
