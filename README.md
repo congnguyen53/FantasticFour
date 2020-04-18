@@ -57,12 +57,38 @@ Administrators can update and delete user accounts.
 ## Using Medical Doctor as Healthcare Professionals
 
 ### 1. Log-In
-Using the Login information provided by the IT administrator of the hospital. **Username** will be the first 3 letters of the employee last name (can be less depending on the length of the name). <br />
+Using the Login information provided by the IT administrator of the hospital. <br />
+ **Username** will be the first 3 letters of the employee last name (can be less depending on the length of the name). <br />
 **Password** will be randomly generated pins (4 numbers). Can be changed by the administrator later.
 
 ![Log-in](https://github.com/congnguyen53/FantasticFour/blob/master/MDPic/Login-Screen.JPG)
 
-### 2. MainScreen
+### 2. MainScreen Access
+
+After Logging In successfully, the employee will access the main screen.
+![Main Screen](https://github.com/congnguyen53/FantasticFour/blob/master/MDPic/MainScreen.JPG)
+
+### 3. New Patient Registration
+The employee can then create a new patient profile by clicking on “Register New Patient” button
+
+![Register](https://github.com/congnguyen53/FantasticFour/blob/master/MDPic/NewPatient.JPG)
+Please Fill out all the fields to successfully save the data to the database. When a new patient profile is created. A patient ID is automatically generated using the first letter of the first name and the first three letters of the last name. In addition, three uniquely generated numbers.
+
+### 4. Patient Search
+
+To access patient profiles. Click on the “Search Patients” button
+
+![Search](https://github.com/congnguyen53/FantasticFour/blob/master/MDPic/Search.JPG)
+
+Here the employee can search for patient profiles by **Names**, **Date of Birth**, or “Patient ID”. Click on the access button to read the profile.
+
+### 5. Patient Profile
+
+Here the employee can access all the patient information and medical information.
+
+There are tabs on top of the profile to access different functionalities of Medical Doctor application
+
+![Patient Profile](https://github.com/congnguyen53/FantasticFour/blob/master/MDPic/PatientProfile.JPG)
 
 
 
