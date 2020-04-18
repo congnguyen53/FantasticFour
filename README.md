@@ -12,4 +12,8 @@ After mySQL is installed. Set up a new connection for the database in MySQL Work
 ![MySQL New Connection](https://github.com/congnguyen53/FantasticFour/blob/master/MDPic/newconnection.png)
 New Connection name will be used as hostname to connect to the database later
 
+### 3. Loading the model (Database Design)
+After new database connection is established. Proceed to load the model file given by our team.
+![Load Model](https://github.com/congnguyen53/FantasticFour/blob/master/MDPic/loadmodel.png)
 
+This is the Database Design created for the SQL Database Management System.
